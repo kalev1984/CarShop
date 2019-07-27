@@ -245,6 +245,45 @@ namespace CarShopTest
             Assert.AreEqual(m.GetModelPrice(), 1200);
         }
 
+        [TestMethod]
+        public void NewAccessoryHasNameAndPrice() {
+            Accessory a = new Accessory("LED lights", 200);
+            Assert.AreEqual(a.GetAccessoryName(), "LED lights");
+            Assert.AreEqual(a.GetAccessoryPrice(), 200);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Accessory name must be at least 3 characters!")]
+        public void AccessoryNameMinimumLength()
+        {
+            Accessory a = new Accessory("ab", 200);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Accessory name must be at least 3 characters!")]
+        public void AccessoryNameCannotBeNull()
+        {
+            Accessory a = new Accessory(null, 200);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Accessory name must be at least 3 characters!")]
+        public void AccessoryNameCannotBeEmpty()
+        {
+            Accessory a = new Accessory("", 200);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Accessory price must be bigger than 0")]
+        public void AccessoryPriceCannotBeLessThanZero()
+        {
+            Accessory a = new Accessory("accessory", -1);
+        }
+
 
     }
-}
+}   
