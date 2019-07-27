@@ -98,5 +98,10 @@ namespace Domain
         {
             return _accessories;
         }
+
+        public override string ToString()
+        {
+            return "Car: " + _car.GetCarName() + ", Model: " + _name + ", Year: " + _year + ", Price: " + _price;
+        }
     }
 }

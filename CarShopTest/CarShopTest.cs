@@ -350,5 +350,27 @@ namespace CarShopTest
             m.AddModelAccessory(b);
             Assert.AreEqual(m.GetModelPrice(), 1800);
         }
+
+        [TestMethod]
+        public void CarToString()
+        {
+            Car c = new Car("abc");
+            Assert.AreEqual(c.ToString(), "Car: abc");
+        }
+
+        [TestMethod]
+        public void AccessoryToString()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Assert.AreEqual(a.ToString(), "Accessory: abc, Price: 100");
+        }
+
+        [TestMethod]
+        public void ModelToString()
+        {
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            Assert.AreEqual(m.ToString(), "Car: abc, Model: abc, Year: 1984, Price: 1500");
+        }
     }
 }   

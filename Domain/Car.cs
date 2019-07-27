@@ -27,5 +27,10 @@ namespace Domain
             }
             _name = name;
         }
+
+        public override string ToString()
+        {
+            return "Car: " + _name;
+        }
     }
 }

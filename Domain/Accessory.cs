@@ -31,5 +31,10 @@ namespace Domain
         {
             return _price;
         }
+
+        public override string ToString()
+        {
+            return "Accessory: " + _name + ", Price: " + _price;
+        }
     }
 }
