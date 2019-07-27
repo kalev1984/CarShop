@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -284,6 +285,70 @@ namespace CarShopTest
             Accessory a = new Accessory("accessory", -1);
         }
 
+        [TestMethod]
+        public void AddAccessoryToModel()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            Assert.AreEqual(m.GetModelAccessories().Count, 1);
+        }
 
+        [TestMethod]
+        public void AddAccessoryToPrice()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            Assert.AreEqual(m.GetModelPrice(), 1600);
+        }
+
+        [TestMethod]
+        public void NoDiscountToAccessory()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            m.SetModelDiscount(20);
+            Assert.AreEqual(m.GetModelPrice(), 1300);
+        }
+
+        [TestMethod]
+        public void NoDiscountToAccessories()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Accessory b = new Accessory("def", 200);
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            m.AddModelAccessory(b);
+            m.SetModelDiscount(20);
+            Assert.AreEqual(m.GetModelPrice(), 1500);
+        }
+
+        [TestMethod]
+        public void NoDiscountWithAccessory()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            Assert.AreEqual(m.GetModelPrice(), 1600);
+        }
+
+        [TestMethod]
+        public void NoDiscountWithAccessories()
+        {
+            Accessory a = new Accessory("abc", 100);
+            Accessory b = new Accessory("def", 200);
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            m.AddModelAccessory(b);
+            Assert.AreEqual(m.GetModelPrice(), 1800);
+        }
     }
 }   

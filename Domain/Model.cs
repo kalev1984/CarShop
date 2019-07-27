@@ -11,6 +11,8 @@ namespace Domain
         private int _year;
         private int _price;
         private int _discount;
+        private List<Accessory> _accessories = new List<Accessory>();
+        private int _accessoryPrice;
 
         public Model(Car car, string name, int year, int price)
         {
@@ -45,7 +47,7 @@ namespace Domain
 
         public int GetModelPrice()
         {
-            return _price;
+            return _price + _accessoryPrice;
         }
 
         public void SetModelName(string name)
@@ -84,6 +86,17 @@ namespace Domain
             }
             _discount = discount;
             _price = _price * (100 - _discount) / 100;
+        }
+
+        public void AddModelAccessory(Accessory a)
+        {
+            _accessories.Add(a);
+            _accessoryPrice += a.GetAccessoryPrice();
+        }
+
+        public List<Accessory> GetModelAccessories()
+        {
+            return _accessories;
         }
     }
 }
