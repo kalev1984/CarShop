@@ -234,5 +234,17 @@ namespace CarShopTest
             Model m = new Model(c, "model", 2013, 1500);
             m.SetModelDiscount(150);
         }
+
+        [TestMethod]
+        public void ModelCalculateDiscountPrice()
+        {
+            Car c = new Car("car");
+            Model m = new Model(c, "model", 2013, 1500);
+            m.SetModelDiscount(20);
+            Assert.AreEqual(m.GetModelDiscount(), 20);
+            Assert.AreEqual(m.GetModelPrice(), 1200);
+        }
+
+
     }
 }

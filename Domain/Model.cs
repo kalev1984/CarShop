@@ -30,7 +30,7 @@ namespace Domain
             _car = car;
             _name = name;
             _year = year;
-            _price = price;
+            _price = price * (100 - _discount) / 100; // + _accessoriesPrice; 
         }
 
         public string GetModelName()
@@ -83,6 +83,7 @@ namespace Domain
                 throw new ArgumentException("Discount cannot be less than 0 and more than 100");
             }
             _discount = discount;
+            _price = _price * (100 - _discount) / 100;
         }
     }
 }
