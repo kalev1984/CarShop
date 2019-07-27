@@ -189,5 +189,50 @@ namespace CarShopTest
             Model m = new Model(c, "model", 2013, 1500);
             m.SetModelName(null);
         }
+
+        [TestMethod]
+        public void GetModelPrice()
+        {
+            Car c = new Car("car");
+            Model m = new Model(c, "model", 2013, 1500);
+            Assert.AreEqual(m.GetModelPrice(), 1500);
+        }
+
+        [TestMethod]
+        public void GetModelDiscount()
+        {
+            Car c = new Car("car");
+            Model m = new Model(c, "model", 2013, 1500);
+            Assert.AreEqual(m.GetModelDiscount(), 0);
+        }
+
+        [TestMethod]
+        public void SetModelDiscount()
+        {
+            Car c = new Car("car");
+            Model m = new Model(c, "model", 2013, 1500);
+            m.SetModelDiscount(20);
+            Assert.AreEqual(m.GetModelDiscount(), 20);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Discount cannot be less than 0 and more than 100")]
+        public void ModelSetDiscountTooSmall()
+        {
+            Car c = new Car("car");
+            Model m = new Model(c, "model", 2013, 1500);
+            m.SetModelDiscount(-1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Discount cannot be less than 0 and more than 100")]
+        public void ModelSetDiscountTooBig()
+        {
+            Car c = new Car("car");
+            Model m = new Model(c, "model", 2013, 1500);
+            m.SetModelDiscount(150);
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace Domain
         private string _name;
         private int _year;
         private int _price;
+        private int _discount;
 
         public Model(Car car, string name, int year, int price)
         {
@@ -68,6 +69,20 @@ namespace Domain
                 throw new ArgumentException("Model price cannot be smaller than 1");
             }
             _price = price;
+        }
+
+        public int GetModelDiscount()
+        {
+            return _discount;
+        }
+
+        public void SetModelDiscount(int discount)
+        {
+            if(discount < 0 || discount > 100)
+            {
+                throw new ArgumentException("Discount cannot be less than 0 and more than 100");
+            }
+            _discount = discount;
         }
     }
 }
