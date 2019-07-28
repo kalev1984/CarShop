@@ -9,14 +9,14 @@ namespace CarShopTest
     public class CarShopTest
     {
         [TestMethod]
-        public void NewCarHasName()
+        public void CarHasName()
         {
             Car c1 = new Car("Opel");
             Assert.AreEqual(c1.GetCarName(), "Opel");
         }
 
         [TestMethod]
-        public void NewCarChangeName()
+        public void CarChangeName()
         {
             Car c1 = new Car("Opel");
             c1.SetCarName("Toyota");
@@ -26,7 +26,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Car name must be at least 3 characters")]
-        public void CarNameIsEmptyString()
+        public void CarEmptyNameThrowsError()
         {
             _ = new Car("");
         }
@@ -34,7 +34,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Car name must be at least 3 characters")]
-        public void CarNameIsNull()
+        public void CarNullNameThrowsError()
         {
             _ = new Car(null);
         }
@@ -42,7 +42,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Car name must be at least 3 characters")]
-        public void CarNameTooSmall()
+        public void CarNameTooSmallThrowsError()
         {
             _ = new Car("ab");
         }
@@ -50,7 +50,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Car name must be at least 3 characters")]
-        public void CarSetNameIsEmptyString()
+        public void CarSetNameEmptyStringThrowsError()
         {
             Car c = new Car("car");
             c.SetCarName("");
@@ -59,7 +59,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Car name must be at least 3 characters")]
-        public void CarSetNameIsNull()
+        public void CarSetNameNullThrowsError()
         {
             Car c = new Car("car");
             c.SetCarName(null);
@@ -68,14 +68,14 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Car name must be at least 3 characters")]
-        public void CarSetNameTooSmall()
+        public void CarSetNameTooSmallThrowsError()
         {
             Car c = new Car("car");
             c.SetCarName("ab");
         }
 
         [TestMethod]
-        public void NewModelHasNamePriceAndYear()
+        public void ModelHasNamePriceAndYear()
         {
             Car opel = new Car("Opel");
             Model omega = new Model(opel, "Omega", 2002, 1500);
@@ -85,7 +85,7 @@ namespace CarShopTest
         }
 
         [TestMethod]
-        public void NewModelChangeNamePriceAndYear()
+        public void ModelChangeNamePriceAndYear()
         {
             Car toyota = new Car("Toyota");
             Model avensis = new Model(toyota, "Avensis", 2013, 7500);
@@ -100,7 +100,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model name must be at least 3 characters")]
-        public void ModelNameTooSmall()
+        public void ModelNameTooSmallThrowsError()
         {
             Car c = new Car("car");
             _ = new Model(c, "ab", 2002, 1400);
@@ -109,7 +109,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model name must be at least 3 characters")]
-        public void ModelNameEmptyString()
+        public void ModelNameEmptyStringThrowsError()
         {
             Car c = new Car("car");
             _ = new Model(c, "", 2002, 1400);
@@ -118,7 +118,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model name must be at least 3 characters")]
-        public void ModelNameIsNull()
+        public void ModelNameIsNullThrowsError()
         {
             Car c = new Car("car");
             _ = new Model(c, null, 2002, 1400);
@@ -127,7 +127,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model year must be in range between 1960 and current year")]
-        public void ModelYearIsTooSmall()
+        public void ModelYearIsTooSmallThrowsError()
         {
             Car c = new Car("car");
             _ = new Model(c, "model", 0, 1400);
@@ -136,7 +136,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model year must be in range between 1960 and current year")]
-        public void ModelYearIsTooBig()
+        public void ModelYearIsTooBigThrowsError()
         {
             Car c = new Car("car");
             _ = new Model(c, "model", 3000, 1400);
@@ -145,7 +145,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model price cannot be smaller than 1")]
-        public void ModelPriceIsTooSmall()
+        public void ModelPriceIsTooSmallThrowsError()
         {
             Car c = new Car("car");
             _ = new Model(c, "model", 2013, -1);
@@ -154,7 +154,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model price cannot be smaller than 1")]
-        public void ModelSetPriceIsTooSmall()
+        public void ModelSetPriceIsTooSmallThrowsError()
         {
             Car c = new Car("car");
             Model m = new Model(c, "model", 2013, 1500);
@@ -164,7 +164,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model name must be at least 3 characters")]
-        public void ModelSetNameIsTooSmall()
+        public void ModelSetNameIsTooSmallThrowsError()
         {
             Car c = new Car("car");
             Model m = new Model(c, "model", 2013, 1500);
@@ -174,7 +174,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model name must be at least 3 characters")]
-        public void ModelSetNameIsEmpty()
+        public void ModelSetNameIsEmptyThrowsError()
         {
             Car c = new Car("car");
             Model m = new Model(c, "model", 2013, 1500);
@@ -184,7 +184,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Model name must be at least 3 characters")]
-        public void ModelSetNameIsNull()
+        public void ModelSetNameIsNullThrowsError()
         {
             Car c = new Car("car");
             Model m = new Model(c, "model", 2013, 1500);
@@ -219,7 +219,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Discount cannot be less than 0 and more than 100")]
-        public void ModelSetDiscountTooSmall()
+        public void ModelSetDiscountTooSmallThrowsError()
         {
             Car c = new Car("car");
             Model m = new Model(c, "model", 2013, 1500);
@@ -229,7 +229,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Discount cannot be less than 0 and more than 100")]
-        public void ModelSetDiscountTooBig()
+        public void ModelSetDiscountTooBigThrowsError()
         {
             Car c = new Car("car");
             Model m = new Model(c, "model", 2013, 1500);
@@ -247,7 +247,7 @@ namespace CarShopTest
         }
 
         [TestMethod]
-        public void NewAccessoryHasNameAndPrice() {
+        public void AccessoryHasNameAndPrice() {
             Accessory a = new Accessory("LED lights", 200);
             Assert.AreEqual(a.GetAccessoryName(), "LED lights");
             Assert.AreEqual(a.GetAccessoryPrice(), 200);
@@ -256,7 +256,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Accessory name must be at least 3 characters!")]
-        public void AccessoryNameMinimumLength()
+        public void AccessoryNameMinimumLengthThrowsError()
         {
             Accessory a = new Accessory("ab", 200);
         }
@@ -264,7 +264,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Accessory name must be at least 3 characters!")]
-        public void AccessoryNameCannotBeNull()
+        public void AccessoryNameCannotBeNullThrowsError()
         {
             Accessory a = new Accessory(null, 200);
         }
@@ -272,7 +272,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Accessory name must be at least 3 characters!")]
-        public void AccessoryNameCannotBeEmpty()
+        public void AccessoryNameCannotBeEmptyThrowsError()
         {
             Accessory a = new Accessory("", 200);
         }
@@ -280,7 +280,7 @@ namespace CarShopTest
         [TestMethod]
         [ExpectedException(typeof(ArgumentException),
             "Accessory price must be bigger than 0")]
-        public void AccessoryPriceCannotBeLessThanZero()
+        public void AccessoryPriceCannotBeLessThanZeroThrowsError()
         {
             Accessory a = new Accessory("accessory", -1);
         }
