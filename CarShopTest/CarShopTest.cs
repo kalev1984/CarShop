@@ -370,7 +370,20 @@ namespace CarShopTest
         {
             Car c = new Car("abc");
             Model m = new Model(c, "abc", 1984, 1500);
-            Assert.AreEqual(m.ToString(), "Car: abc, Model: abc, Year: 1984, Price: 1500");
+            Assert.AreEqual(m.ToString(), "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0");
+        }
+
+        [TestMethod]
+        public void ModelToStringAlsoListsAccessories()
+        {
+            Car c = new Car("abc");
+            Model m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(new Accessory("Cruise Control", 500));
+            m.AddModelAccessory(new Accessory("Trolley Hook", 200));
+            Assert.AreEqual(
+                m.ToString(),
+                "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0 with following accessories: " +
+                "Accessory: Cruise Control, Price: 500, Accessory: Trolley Hook, Price: 200");
         }
     }
 }   

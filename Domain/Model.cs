@@ -101,7 +101,21 @@ namespace Domain
 
         public override string ToString()
         {
-            return "Car: " + _car.GetCarName() + ", Model: " + _name + ", Year: " + _year + ", Price: " + _price;
+            string s = "Car: " + _car.GetCarName() + ", Model: " + _name + ", Year: " + _year + ", Price: " + _price + ", Discount: " + _discount;
+            if (_accessories.Count == 0)
+            {
+                return s;
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Append(s);
+            sb.Append(" with following accessories: ");
+            foreach(var i in _accessories)
+            {
+                sb.Append(i.ToString());
+                sb.Append(", ");
+            }
+            sb.Remove(sb.Length - 2, 2);
+            return sb.ToString();
         }
     }
 }
