@@ -14,7 +14,7 @@ namespace Domain
             {
                 throw new ArgumentException("Accessory name must be at least 3 characters!");
             }
-            if (price < 0)
+            if (price < 1)
             {
                 throw new ArgumentException("Accessory price must be bigger than 0");
             }

@@ -9,381 +9,430 @@ namespace CarShopTest
     public class CarShopTest
     {
         [TestMethod]
-        public void CarHasName()
+        public void TestCarReturnName()
         {
-            Car c1 = new Car("Opel");
-            Assert.AreEqual(c1.GetCarName(), "Opel");
+            var expected = "Opel";
+
+            var c1 = new Car("Opel");
+
+            Assert.AreEqual(expected, c1.GetCarName());
         }
 
         [TestMethod]
-        public void CarChangeName()
+        public void TestCarChangeName()
         {
-            Car c1 = new Car("Opel");
+            var c1 = new Car("Opel");
+            var expected = "Toyota";
+
             c1.SetCarName("Toyota");
-            Assert.AreEqual(c1.GetCarName(), "Toyota");
+
+            Assert.AreEqual(expected, c1.GetCarName());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Car name must be at least 3 characters")]
-        public void CarEmptyNameThrowsError()
+        public void TestCarEmptyNameThrows()
         {
-            _ = new Car("");
+            Assert.ThrowsException<System.ArgumentException>(() => new Car(""));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Car name must be at least 3 characters")]
-        public void CarNullNameThrowsError()
+        public void TestCarNameLessThanThreeCharactersThrows()
         {
-            _ = new Car(null);
+            Assert.ThrowsException<System.ArgumentException>(() => new Car("12"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Car name must be at least 3 characters")]
-        public void CarNameTooSmallThrowsError()
+        public void TestCarNameNullThrows()
         {
-            _ = new Car("ab");
+            Assert.ThrowsException<System.ArgumentException>(() => new Car(null));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Car name must be at least 3 characters")]
-        public void CarSetNameEmptyStringThrowsError()
+        public void TestCarSetNameEmptyThrows()
         {
-            Car c = new Car("car");
-            c.SetCarName("");
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => c.SetCarName(""));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Car name must be at least 3 characters")]
-        public void CarSetNameNullThrowsError()
+        public void TestCarSetName_LessThan_ThreeCharacters_Throws()
         {
-            Car c = new Car("car");
-            c.SetCarName(null);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => c.SetCarName("12"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Car name must be at least 3 characters")]
-        public void CarSetNameTooSmallThrowsError()
+        public void TestCarSetNameNullThrows()
         {
-            Car c = new Car("car");
-            c.SetCarName("ab");
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => c.SetCarName(null));
         }
 
         [TestMethod]
-        public void ModelHasNamePriceAndYear()
+        public void TestModelReturnsName()
         {
-            Car opel = new Car("Opel");
-            Model omega = new Model(opel, "Omega", 2002, 1500);
-            Assert.AreEqual(omega.GetModelName(), "Omega");
-            Assert.AreEqual(omega.GetModelYear(), 2002);
-            Assert.AreEqual(omega.GetModelPrice(), 1500);
+            var opel = new Car("Opel");
+            var expected = "Omega";
+
+            var omega = new Model(opel, "Omega", 2002, 1500);
+
+            Assert.AreEqual(expected, omega.GetModelName());
         }
 
         [TestMethod]
-        public void ModelChangeNamePriceAndYear()
+        public void TestModelReturnsYear()
         {
-            Car toyota = new Car("Toyota");
-            Model avensis = new Model(toyota, "Avensis", 2013, 7500);
-            avensis.SetModelName("Corolla");
-            avensis.SetModelYear(2006);
-            avensis.SetModelPrice(5000);
-            Assert.AreEqual(avensis.GetModelName(), "Corolla");
-            Assert.AreEqual(avensis.GetModelYear(), 2006);
-            Assert.AreEqual(avensis.GetModelPrice(), 5000);
+            var opel = new Car("Opel");
+            var expected = 2002;
+
+            var omega = new Model(opel, "Omega", 2002, 1500);
+
+            Assert.AreEqual(expected, omega.GetModelYear());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model name must be at least 3 characters")]
-        public void ModelNameTooSmallThrowsError()
+        public void TestModelReturnsPrice()
         {
-            Car c = new Car("car");
-            _ = new Model(c, "ab", 2002, 1400);
+            var opel = new Car("Opel");
+            var expected = 1500;
+
+            var omega = new Model(opel, "Omega", 2002, 1500);
+
+            Assert.AreEqual(expected, omega.GetModelPrice());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model name must be at least 3 characters")]
-        public void ModelNameEmptyStringThrowsError()
+        public void TestModelChangeName()
         {
-            Car c = new Car("car");
-            _ = new Model(c, "", 2002, 1400);
+            var toyota = new Car("Toyota");
+            var expected = "Corolla";
+
+            var m = new Model(toyota, "Avensis", 2013, 7500);
+            m.SetModelName("Corolla");
+
+            Assert.AreEqual(expected, m.GetModelName());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model name must be at least 3 characters")]
-        public void ModelNameIsNullThrowsError()
+        public void TestModelChangeYear()
         {
-            Car c = new Car("car");
-            _ = new Model(c, null, 2002, 1400);
+            var toyota = new Car("Toyota");
+            var expected = 2006;
+
+            var m = new Model(toyota, "Avensis", 2013, 7500);
+            m.SetModelYear(2006);
+
+            Assert.AreEqual(expected, m.GetModelYear());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model year must be in range between 1960 and current year")]
-        public void ModelYearIsTooSmallThrowsError()
+        public void TestModelChangePrice()
         {
-            Car c = new Car("car");
-            _ = new Model(c, "model", 0, 1400);
+            var toyota = new Car("Toyota");
+            var expected = 5000;
+
+            var m = new Model(toyota, "Avensis", 2013, 7500);
+            m.SetModelPrice(5000);
+          
+            Assert.AreEqual(expected, m.GetModelPrice());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model year must be in range between 1960 and current year")]
-        public void ModelYearIsTooBigThrowsError()
+        public void TestModelEmptyNameThrows()
         {
-            Car c = new Car("car");
-            _ = new Model(c, "model", 3000, 1400);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "", 2000, 2000));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model price cannot be smaller than 1")]
-        public void ModelPriceIsTooSmallThrowsError()
+        public void TestModelNameLessThanThreeCharactersThrows()
         {
-            Car c = new Car("car");
-            _ = new Model(c, "model", 2013, -1);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "12", 2000, 2000));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model price cannot be smaller than 1")]
-        public void ModelSetPriceIsTooSmallThrowsError()
+        public void TestModelNameNullThrows()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            m.SetModelPrice(0);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, null, 2000, 2000));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model name must be at least 3 characters")]
-        public void ModelSetNameIsTooSmallThrowsError()
+        public void TestModelYearLessThan1960()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            m.SetModelName("ab");
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 1959, 2000));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model name must be at least 3 characters")]
-        public void ModelSetNameIsEmptyThrowsError()
+        public void TestModelYearBiggerThanCurrentYear()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            m.SetModelName("");
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Model name must be at least 3 characters")]
-        public void ModelSetNameIsNullThrowsError()
+        public void TestModelPriceIsLessThanOneThrows()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            m.SetModelName(null);
+            var c = new Car("car");
+         
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 0));
         }
 
         [TestMethod]
-        public void GetModelPrice()
+        public void TestModelPriceIsNegativeThrows()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            Assert.AreEqual(m.GetModelPrice(), 1500);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, -2));
         }
 
         [TestMethod]
-        public void GetModelDiscount()
+        public void TestModelChangePriceToLessThanOneThrows()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            Assert.AreEqual(m.GetModelDiscount(), 0);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelPrice(0));
         }
 
         [TestMethod]
-        public void SetModelDiscount()
+        public void TestModelChangePriceToNegativeThrows()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelPrice(-2));
+        }
+
+        [TestMethod]
+        public void TestModelChangeNameTooSmallThrows()
+        {
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelName("12"));
+        }
+
+        [TestMethod]
+        public void TestModelChangeNameToEmptyThrows()
+        {
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelName(""));
+        }
+
+        [TestMethod]
+        public void TestModelChangeNameToNullThrows()
+        {
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelName(null));
+        }
+
+        [TestMethod]
+        public void TestModelReturnDefaultDiscount()
+        {
+            var c = new Car("car");
+            var expected = 0;
+
+            var m = new Model(c, "model", 2013, 1500);
+
+            Assert.AreEqual(expected, 0);
+        }
+
+        [TestMethod]
+        public void TestModelChangeDiscount()
+        {
+            var c = new Car("car");
+            var expected = 20;
+
+            var m = new Model(c, "model", 2013, 1500);
             m.SetModelDiscount(20);
-            Assert.AreEqual(m.GetModelDiscount(), 20);
+
+            Assert.AreEqual(expected, m.GetModelDiscount());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Discount cannot be less than 0 and more than 100")]
-        public void ModelSetDiscountTooSmallThrowsError()
+        public void TestModelChangeDiscountLessThanZeroThrows()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            m.SetModelDiscount(-1);
+            var c = new Car("car");
+            
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelDiscount(-1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Discount cannot be less than 0 and more than 100")]
-        public void ModelSetDiscountTooBigThrowsError()
+        public void TestModelChangeDiscountBiggerThanHundred()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
-            m.SetModelDiscount(150);
+            var c = new Car("car");
+
+            Assert.ThrowsException<System.ArgumentException>(() => new Model(c, "model", 2020, 2000).SetModelDiscount(101));
         }
 
         [TestMethod]
-        public void ModelCalculateDiscountPrice()
+        public void TestModelCalculateDiscountPrice()
         {
-            Car c = new Car("car");
-            Model m = new Model(c, "model", 2013, 1500);
+            var c = new Car("car");
+            var expected = 1200;
+
+            var m = new Model(c, "model", 2013, 1500);
             m.SetModelDiscount(20);
-            Assert.AreEqual(m.GetModelDiscount(), 20);
-            Assert.AreEqual(m.GetModelPrice(), 1200);
+
+            Assert.AreEqual(expected, m.GetModelPrice());
         }
 
         [TestMethod]
-        public void AccessoryHasNameAndPrice() {
-            Accessory a = new Accessory("LED lights", 200);
-            Assert.AreEqual(a.GetAccessoryName(), "LED lights");
-            Assert.AreEqual(a.GetAccessoryPrice(), 200);
+        public void TestAccessoryReturnsName() {
+            var a = new Accessory("LED lights", 200);
+            var expected = "LED lights";
+
+            Assert.AreEqual(expected, a.GetAccessoryName());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Accessory name must be at least 3 characters!")]
-        public void AccessoryNameMinimumLengthThrowsError()
+        public void TestAccessoryReturnsPrice()
         {
-            Accessory a = new Accessory("ab", 200);
+            var a = new Accessory("LED lights", 200);
+            var expected = 200;
+
+            Assert.AreEqual(expected, a.GetAccessoryPrice());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Accessory name must be at least 3 characters!")]
-        public void AccessoryNameCannotBeNullThrowsError()
+        public void TestAccessoryNameLessThanThreeThrows()
         {
-            Accessory a = new Accessory(null, 200);
+            Assert.ThrowsException<System.ArgumentException>(() => new Accessory("12", 100));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Accessory name must be at least 3 characters!")]
-        public void AccessoryNameCannotBeEmptyThrowsError()
+        public void TestAccessoryNameNullThrows()
         {
-            Accessory a = new Accessory("", 200);
+            Assert.ThrowsException<System.ArgumentException>(() => new Accessory(null, 100));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
-            "Accessory price must be bigger than 0")]
-        public void AccessoryPriceCannotBeLessThanZeroThrowsError()
+        public void TestAccessoryNameEmptyThrows()
         {
-            Accessory a = new Accessory("accessory", -1);
+            Assert.ThrowsException<System.ArgumentException>(() => new Accessory("", 100));
         }
 
         [TestMethod]
-        public void AddAccessoryToModel()
+        public void TestAccessoryPriceSmallerThanOneThrows()
         {
-            Accessory a = new Accessory("abc", 100);
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
+            Assert.ThrowsException<System.ArgumentException>(() => new Accessory("abc", 0));
+        }
+
+        [TestMethod]
+        public void TestAccessoryPriceSmallerThanZeroThrows()
+        {
+            Assert.ThrowsException<System.ArgumentException>(() => new Accessory("abc", -1));
+        }
+
+        [TestMethod]
+        public void TestModelAddAccessory()
+        {
+            var c = new Car("abc");
+            var expected = 1;
+
+            var m = new Model(c, "abc", 1984, 1500);
+            var a = new Accessory("abc", 100);
             m.AddModelAccessory(a);
-            Assert.AreEqual(m.GetModelAccessories().Count, 1);
+
+            Assert.AreEqual(expected, m.GetModelAccessories().Count);
         }
 
         [TestMethod]
-        public void AddAccessoryToPrice()
+        public void TestModelPriceWithAccessory()
         {
-            Accessory a = new Accessory("abc", 100);
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
+            var c = new Car("abc");
+            var expected = 1600;
+
+            var a = new Accessory("abc", 100);
+            var m = new Model(c, "abc", 1984, 1500);
             m.AddModelAccessory(a);
-            Assert.AreEqual(m.GetModelPrice(), 1600);
+
+            Assert.AreEqual(expected, m.GetModelPrice());
         }
 
         [TestMethod]
-        public void NoDiscountToAccessory()
+        public void TestModelDiscountDoesNotApplyToAccessory()
         {
-            Accessory a = new Accessory("abc", 100);
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
+            var c = new Car("abc");
+            var expected = 1300;
+
+            var a = new Accessory("abc", 100);
+            var m = new Model(c, "abc", 1984, 1500);
             m.AddModelAccessory(a);
             m.SetModelDiscount(20);
-            Assert.AreEqual(m.GetModelPrice(), 1300);
+
+            Assert.AreEqual(expected, m.GetModelPrice());
         }
 
         [TestMethod]
-        public void NoDiscountToAccessories()
+        public void TestModelDiscountDoesNotApplyToAccessories()
         {
-            Accessory a = new Accessory("abc", 100);
-            Accessory b = new Accessory("def", 200);
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
+            var c = new Car("abc");
+            var expected = 1500;
+
+            var a = new Accessory("abc", 100);
+            var b = new Accessory("def", 200);
+            var m = new Model(c, "abc", 1984, 1500);
             m.AddModelAccessory(a);
             m.AddModelAccessory(b);
             m.SetModelDiscount(20);
-            Assert.AreEqual(m.GetModelPrice(), 1500);
+
+            Assert.AreEqual(expected, m.GetModelPrice());
         }
 
         [TestMethod]
-        public void NoDiscountWithAccessory()
+        public void TestCarToString()
         {
-            Accessory a = new Accessory("abc", 100);
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
-            m.AddModelAccessory(a);
-            Assert.AreEqual(m.GetModelPrice(), 1600);
+            var expected = "Car: abc";
+
+            var c = new Car("abc");
+
+            Assert.AreEqual(expected, c.ToString());
         }
 
         [TestMethod]
-        public void NoDiscountWithAccessories()
+        public void TestAccessoryToString()
         {
-            Accessory a = new Accessory("abc", 100);
-            Accessory b = new Accessory("def", 200);
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
-            m.AddModelAccessory(a);
-            m.AddModelAccessory(b);
-            Assert.AreEqual(m.GetModelPrice(), 1800);
+            var expected = "Accessory: abc, Price: 100";
+
+            var a = new Accessory("abc", 100);
+
+            Assert.AreEqual(expected, a.ToString());
         }
 
         [TestMethod]
-        public void CarToString()
+        public void TestModelToString()
         {
-            Car c = new Car("abc");
-            Assert.AreEqual(c.ToString(), "Car: abc");
+            var c = new Car("abc");
+            var expected = "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0";
+
+            var m = new Model(c, "abc", 1984, 1500);
+
+            Assert.AreEqual(expected, m.ToString());
         }
 
         [TestMethod]
-        public void AccessoryToString()
+        public void TestModelToStringWithAccessories()
         {
-            Accessory a = new Accessory("abc", 100);
-            Assert.AreEqual(a.ToString(), "Accessory: abc, Price: 100");
-        }
+            var c = new Car("abc");
+            var expected = "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0 with following accessories: " +
+                "Accessory: Cruise Control, Price: 500, Accessory: Trolley Hook, Price: 200";
 
-        [TestMethod]
-        public void ModelToString()
-        {
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
-            Assert.AreEqual(m.ToString(), "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0");
-        }
-
-        [TestMethod]
-        public void ModelToStringAlsoListsAccessories()
-        {
-            Car c = new Car("abc");
-            Model m = new Model(c, "abc", 1984, 1500);
+            var m = new Model(c, "abc", 1984, 1500);
             m.AddModelAccessory(new Accessory("Cruise Control", 500));
             m.AddModelAccessory(new Accessory("Trolley Hook", 200));
-            Assert.AreEqual(
-                m.ToString(),
-                "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0 with following accessories: " +
-                "Accessory: Cruise Control, Price: 500, Accessory: Trolley Hook, Price: 200");
+
+            Assert.AreEqual(expected, m.ToString());
         }
     }
 }   
