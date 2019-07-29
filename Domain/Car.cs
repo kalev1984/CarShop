@@ -32,5 +32,11 @@ namespace Domain
         {
             return "Car: " + _name;
         }
+
+        public override bool Equals(object obj)
+        {
+            var c = (Car)obj;
+            return _name.Equals(c.GetCarName());
+        }
     }
 }

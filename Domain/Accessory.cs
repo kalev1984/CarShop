@@ -36,5 +36,11 @@ namespace Domain
         {
             return "Accessory: " + _name + ", Price: " + _price;
         }
+
+        public override bool Equals(object obj)
+        {
+            var a = (Accessory)obj;
+            return _name.Equals(a.GetAccessoryName()) && _price == a.GetAccessoryPrice();
+        }
     }
 }

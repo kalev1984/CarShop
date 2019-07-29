@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Domain
@@ -32,7 +33,7 @@ namespace Domain
             _car = car;
             _name = name;
             _year = year;
-            _price = price * (100 - _discount) / 100; // + _accessoriesPrice; 
+            _price = price * (100 - _discount) / 100 + _accessoryPrice; 
         }
 
         public string GetModelName()
@@ -50,9 +51,19 @@ namespace Domain
             return _price + _accessoryPrice;
         }
 
+        public Car GetModelCar()
+        {
+            return _car;
+        }
+
+        public void SetModelCar(Car car)
+        {
+            _car = car;
+        }
+
         public void SetModelName(string name)
         {
-            if (String.IsNullOrWhiteSpace(name) || name.Length < 3)
+            if (string.IsNullOrWhiteSpace(name) || name.Length < 3)
             {
                 throw new ArgumentException("Model name must be at least 3 characters");
             }
@@ -116,6 +127,34 @@ namespace Domain
             }
             sb.Remove(sb.Length - 2, 2);
             return sb.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null)
+            {
+                return false;
+            }
+
+            var m = (Model)obj;
+            var endResult = 
+                _car.Equals(m.GetModelCar()) 
+                && _name.Equals(m.GetModelName()) 
+                && _year == m.GetModelYear() 
+                && GetModelPrice() == m.GetModelPrice()
+                && _discount == m.GetModelDiscount();
+
+            if (_accessories.Count == 0 && m.GetModelAccessories().Count == 0)
+            {
+                return endResult;
+            }
+
+            if (_accessories.Count != m.GetModelAccessories().Count)
+            {
+                return false;
+            }
+
+            return !_accessories.Where((t, i) => t.Equals(m.GetModelAccessories()[i]) != true).Any() && endResult;
         }
     }
 }

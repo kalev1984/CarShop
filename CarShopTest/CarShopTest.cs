@@ -391,7 +391,7 @@ namespace CarShopTest
         }
 
         [TestMethod]
-        public void TestCarToString()
+        public void TestCarToStringOverride()
         {
             var expected = "Car: abc";
 
@@ -401,7 +401,7 @@ namespace CarShopTest
         }
 
         [TestMethod]
-        public void TestAccessoryToString()
+        public void TestAccessoryOverrideToString()
         {
             var expected = "Accessory: abc, Price: 100";
 
@@ -411,7 +411,7 @@ namespace CarShopTest
         }
 
         [TestMethod]
-        public void TestModelToString()
+        public void TestModelOverrideToString()
         {
             var c = new Car("abc");
             var expected = "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0";
@@ -422,7 +422,7 @@ namespace CarShopTest
         }
 
         [TestMethod]
-        public void TestModelToStringWithAccessories()
+        public void TestModelOverrideToStringWithAccessories()
         {
             var c = new Car("abc");
             var expected = "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0 with following accessories: " +
@@ -433,6 +433,93 @@ namespace CarShopTest
             m.AddModelAccessory(new Accessory("Trolley Hook", 200));
 
             Assert.AreEqual(expected, m.ToString());
+        }
+
+        [TestMethod]
+        public void TestCarOverrideEquals()
+        {
+            var c = new Car("abc");
+            var expected = true;
+
+            var d = new Car("abc");
+
+            Assert.AreEqual(expected, c.Equals(d));
+        }
+
+        [TestMethod]
+        public void TestAccessoryOverrideEquals()
+        {
+            var c = new Accessory("abc", 100);
+            var expected = true;
+
+            var d = new Accessory("abc", 100);
+
+            Assert.AreEqual(expected, c.Equals(d));
+        }
+
+        [TestMethod]
+        public void TestModelOverrideEqualsNoAccessories()
+        {
+            var c = new Car("abc");
+            var expected = true;
+
+            var m1 = new Model(c, "model", 2000, 2000);
+            var m2 = new Model(c, "model", 2000, 2000);
+
+            Assert.AreEqual(expected, m1.Equals(m2));
+        }
+
+        [TestMethod]
+        public void TestModelOverrideEqualsOneModelHasAccessories()
+        {
+            var c = new Car("abc");
+            var expected = false;
+
+            var m1 = new Model(c, "model", 2000, 2000);
+            var m2 = new Model(c, "model", 2000, 2000);
+            var a = new Accessory("abc", 100);
+            m1.AddModelAccessory(a);
+
+            Assert.AreEqual(expected, m1.Equals(m2));
+        }
+
+        [TestMethod]
+        public void TestModelOverrideEqualsBothHaveAccessories()
+        {
+            var c = new Car("abc");
+            var expected = true;
+
+            var m1 = new Model(c, "model", 2000, 2000);
+            var m2 = new Model(c, "model", 2000, 2000);
+            var a = new Accessory("abc", 100);
+            m1.AddModelAccessory(a);
+            m2.AddModelAccessory(a);
+
+
+            Assert.AreEqual(expected, m1.Equals(m2));
+        }
+
+        [TestMethod]
+        public void TestModelReturnCar()
+        {
+            var c = new Car("abc");
+            var expected = true;
+
+            var d = new Model(c, "abc", 2000, 2000);
+
+            Assert.AreEqual(expected, d.GetModelCar().Equals(c));
+        }
+
+        [TestMethod]
+        public void TestModelChangeCar()
+        {
+            var c = new Car("abc");
+            var expected = false;
+
+            var d = new Model(c, "abc", 2000, 2000);
+            d.SetModelCar(new Car("bcd"));
+
+            Assert.AreEqual(expected, d.GetModelCar().Equals(c));
         }
     }
 }   
