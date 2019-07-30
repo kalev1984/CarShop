@@ -361,6 +361,21 @@ namespace CarShopTest
         }
 
         [TestMethod]
+        public void TestModelPriceWithAccessories()
+        {
+            var c = new Car("abc");
+            var expected = 1800;
+
+            var a = new Accessory("abc", 100);
+            var b = new Accessory("abc", 200);
+            var m = new Model(c, "abc", 1984, 1500);
+            m.AddModelAccessory(a);
+            m.AddModelAccessory(b);
+
+            Assert.AreEqual(expected, m.GetModelPrice());
+        }
+
+        [TestMethod]
         public void TestModelDiscountDoesNotApplyToAccessory()
         {
             var c = new Car("abc");
@@ -425,7 +440,7 @@ namespace CarShopTest
         public void TestModelOverrideToStringWithAccessories()
         {
             var c = new Car("abc");
-            var expected = "Car: abc, Model: abc, Year: 1984, Price: 1500, Discount: 0 with following accessories: " +
+            var expected = "Car: abc, Model: abc, Year: 1984, Price: 2200, Discount: 0 with following accessories: " +
                 "Accessory: Cruise Control, Price: 500, Accessory: Trolley Hook, Price: 200";
 
             var m = new Model(c, "abc", 1984, 1500);
@@ -521,5 +536,6 @@ namespace CarShopTest
 
             Assert.AreEqual(expected, d.GetModelCar().Equals(c));
         }
+
     }
 }   

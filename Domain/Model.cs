@@ -12,12 +12,13 @@ namespace Domain
         private int _year;
         private int _price;
         private int _discount;
+        //private int _old_discount;
         private List<Accessory> _accessories = new List<Accessory>();
         private int _accessoryPrice;
 
         public Model(Car car, string name, int year, int price)
         {
-            if (String.IsNullOrWhiteSpace(name) ||  name.Length < 3)
+            if (string.IsNullOrWhiteSpace(name) ||  name.Length < 3)
             {
                 throw new ArgumentException("Model name must be at least 3 characters");
             }
@@ -33,7 +34,7 @@ namespace Domain
             _car = car;
             _name = name;
             _year = year;
-            _price = price * (100 - _discount) / 100 + _accessoryPrice; 
+            _price = price; 
         }
 
         public string GetModelName()
@@ -48,7 +49,7 @@ namespace Domain
 
         public int GetModelPrice()
         {
-            return _price + _accessoryPrice;
+            return _price;
         }
 
         public Car GetModelCar()
@@ -96,13 +97,15 @@ namespace Domain
                 throw new ArgumentException("Discount cannot be less than 0 and more than 100");
             }
             _discount = discount;
-            _price = _price * (100 - _discount) / 100;
+            _price = ((_price - _accessoryPrice) * (100 - discount) / 100) + _accessoryPrice;
         }
 
         public void AddModelAccessory(Accessory a)
         {
             _accessories.Add(a);
+            var price = _price - _accessoryPrice;
             _accessoryPrice += a.GetAccessoryPrice();
+            _price = price + _accessoryPrice;
         }
 
         public List<Accessory> GetModelAccessories()
@@ -141,7 +144,7 @@ namespace Domain
                 _car.Equals(m.GetModelCar()) 
                 && _name.Equals(m.GetModelName()) 
                 && _year == m.GetModelYear() 
-                && GetModelPrice() == m.GetModelPrice()
+                && _price == m.GetModelPrice()
                 && _discount == m.GetModelDiscount();
 
             if (_accessories.Count == 0 && m.GetModelAccessories().Count == 0)
